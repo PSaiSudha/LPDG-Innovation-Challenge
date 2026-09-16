@@ -81,7 +81,6 @@ if menu_option == "Executive Overview":
     with col1:
         st.metric(label="Baseline cost (Part 1)", value="€329,400")
     with col2:
-        with col2:
         st.metric(
             label="Machine Learning cost (Part 2)", 
             value="€270,600"
