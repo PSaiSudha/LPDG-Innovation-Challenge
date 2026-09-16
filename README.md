@@ -6,7 +6,7 @@ An advanced **machine learning and telemetry-driven analytics dashboard** design
 
 ## 🌐 Live Demo
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lpdg-innovation-challenge-saisudha.streamlit.app/)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lpdg-innovation-saisudha.streamlit.app/)
 
 ---
 
