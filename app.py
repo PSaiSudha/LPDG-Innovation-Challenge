@@ -43,7 +43,7 @@ if 'nav_index' not in st.session_state:
 st.sidebar.markdown("### **NEXORA / 2026**")
 st.sidebar.markdown("## **Gateway Visit**")
 st.sidebar.markdown("##### Prioritization")
-st.sidebar.caption("Presentation console · read-only evidence")
+st.sidebar.caption("Audit Console — Verified Telemetry View")
 
 st.sidebar.success("✅ Part 1 validated")
 st.sidebar.markdown("---")
@@ -59,8 +59,7 @@ selected_menu = st.sidebar.radio(
 st.session_state.nav_index = menu_options.index(selected_menu)
 
 st.sidebar.markdown("---")
-st.sidebar.caption("Evidence status")
-st.sidebar.caption("Historical proxy-label evaluation only")
+st.sidebar.caption("Proxy-Label Baseline Assessment")
 
 # ----------------- LOAD DATA -----------------
 pred_path = pathlib.Path("predictions.csv")
