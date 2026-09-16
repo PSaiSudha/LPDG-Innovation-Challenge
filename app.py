@@ -113,9 +113,19 @@ elif menu_option == "Part 1 — Operational Ranking":
     st.markdown("This section shows the standard baseline operational ranking using rolling deviation limits.")
     st.dataframe(df_preds[df_preds['score'].notnull()], use_container_width=True)
 
+st.markdown("---")
+if st.button("Next: Part 2 — Machine Learning ➡️"):
+    st.session_state.nav_selection = "Part 2 — Machine Learning"
+    st.rerun()
+    
 elif menu_option == "Part 2 — Machine Learning":
     st.markdown("# Part 2: Machine Learning Risk Ranking")
     st.markdown("Advanced feature-engineered scoring using telemetry trends (offline duration, reboots, disconnections).")
+
+    st.markdown("---")
+if st.button("Next: Baseline vs ML ➡️"):
+    st.session_state.nav_selection = "Baseline vs ML"
+    st.rerun()
     
     # Line chart for weekly profile
     st.markdown("### Weekly cost profile simulation")
@@ -129,6 +139,11 @@ elif menu_option == "Part 2 — Machine Learning":
 elif menu_option == "Baseline vs ML":
     st.markdown("# Baseline vs Machine Learning Comparison")
     st.markdown("Detailed breakdown of cost savings and anomaly detection efficiency between Part 1 and Part 2.")
+
+    st.markdown("---")
+if st.button("Next: Gateway Explorer ➡️"):
+    st.session_state.nav_selection = "Gateway Explorer"
+    st.rerun()
     
     col1, col2 = st.columns(2)
     with col1:
@@ -163,7 +178,6 @@ menu_options = [
     "Baseline vs ML",
     "Gateway Explorer"
 ]
-
 menu_option = st.sidebar.radio(
     "Navigation",
     menu_options,
