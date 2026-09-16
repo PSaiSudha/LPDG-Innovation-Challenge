@@ -81,7 +81,7 @@ if menu_option == "Executive Overview":
     with col1:
         st.metric(label="Baseline cost (Part 1)", value="€329,400")
     with col2:
-        st.metric(label="Machine Learning cost (Part 2)", value="€270,600", delta="-€58,800 saved", delta_color="inverse")
+        st.metric(label="Machine Learning cost (Part 2)", value="€270,600", delta="-€58,800 saved", delta_color="inverse", delta_color="off")
     with col3:
         st.metric(label="Lower historical proxy-label cost", value="€58,800")
         
