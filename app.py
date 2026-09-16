@@ -72,11 +72,11 @@ df_preds = pd.read_csv(pred_path)
 # ----------------- PAGE CONTENT -----------------
 
 if selected_menu == "Executive Overview":
-    st.markdown("# LPDG Gateway Intelligence")
-    st.markdown("#### Field Visit Prioritization & Network Reliability Analysis")
+    st.markdown("# LPDG Gateway Predictive Maintenance")
+    st.markdown("#### Telemetry-Driven Intervention & Network Uptime Analysis")
     
     st.warning(
-        "**Evidence status:** These results use a constructed historical proxy target and are NOT official hidden-ground-truth performance. "
+        "**Telemetry Verification:** These results use a constructed historical proxy target and are NOT official hidden-ground-truth performance. "
         "The cost figures reflect proxy-label optimization."
     )
     
