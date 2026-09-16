@@ -151,3 +151,27 @@ elif menu_option == "Gateway Explorer":
             st.warning("No matching gateways found in the predictions.")
     else:
         st.info("Please type a Gateway ID above to look up records.")
+
+# Initialize session state for navigation if not exists
+if 'nav_selection' not in st.session_state:
+    st.session_state.nav_selection = "Executive Overview"
+
+menu_options = [
+    "Executive Overview",
+    "Part 1 — Operational Ranking",
+    "Part 2 — Machine Learning",
+    "Baseline vs ML",
+    "Gateway Explorer"
+]
+
+menu_option = st.sidebar.radio(
+    "Navigation",
+    menu_options,
+    key="nav_selection"
+)
+
+# Example at the end of "Executive Overview" section:
+st.markdown("---")
+if st.button("Next: Part 1 — Operational Ranking ➡️"):
+    st.session_state.nav_selection = "Part 1 — Operational Ranking"
+    st.rerun()
