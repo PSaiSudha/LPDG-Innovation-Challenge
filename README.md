@@ -1,4 +1,4 @@
-# 🔌 LPDG Innovation Hub – Gateway Visit Prioritization 2026
+# ➕ LPDG Innovation Hub – Gateway Visit Prioritization 2026
 
 An advanced **machine learning and telemetry-driven analytics dashboard** designed to optimize IoT gateway field visits, minimize operational costs, and maximize network reliability.
 
