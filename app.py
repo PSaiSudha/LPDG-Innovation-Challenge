@@ -63,7 +63,7 @@ if "nav_index" not in st.session_state:
   st.session_state.nav_index = 0
 
 # --- HEADER WITH TITLE ON LEFT AND LOGO ON THE RIGHT SIDE ---
-logo_path = "image/LPDG_GROUP_LOGO_India_2.png"
+logo_path = "image/lpdg images.png"
 
 col_title, col_logo = st.columns([4, 1.5])
 
@@ -81,7 +81,6 @@ with col_title:
 
 with col_logo:
   if pathlib.Path(logo_path).exists():
-    # లోగో సైజ్ పెంచడానికి width విలువను 150 లేదా 160 కి మార్చవచ్చు
     st.markdown('<div class="logo-container">', unsafe_allow_html=True)
     st.image(logo_path, width=155)
     st.markdown("</div>", unsafe_allow_html=True)
