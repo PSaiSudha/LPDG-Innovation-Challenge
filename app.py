@@ -63,7 +63,7 @@ if "nav_index" not in st.session_state:
   st.session_state.nav_index = 0
 
 # --- HEADER WITH TITLE ON LEFT AND LOGO ON THE RIGHT SIDE ---
-logo_path = "LPDG_GROUP_LOGO_India_2.png"
+logo_path = "image/LPDG_GROUP_LOGO_India_2.png"
 
 col_title, col_logo = st.columns([5, 1])
 
