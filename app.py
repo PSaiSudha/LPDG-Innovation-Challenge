@@ -41,11 +41,11 @@ st.markdown(
     h1, h2, h3 {
         color: #ffffff !important;
     }
-    p, span, label {
+    p, span {
         color: #d1d5db !important;
     }
     
-    /* Logo Box Styling (Removed Green Border, made it clean dark grey) */
+    /* Logo Box Styling */
     .logo-box {
         display: flex;
         justify-content: flex-end;
@@ -54,7 +54,7 @@ st.markdown(
         padding: 5px;
     }
 
-    /* --- ROBUST CSS TO HIDE RADIO DOTS & SHOW TEXT CLEARLY --- */
+    /* --- FIXED RADIO BUTTONS CSS (Names will be clearly visible now) --- */
     div[data-testid="stHorizontalBlock"] {
         align-items: center;
     }
@@ -64,26 +64,33 @@ st.markdown(
         display: none !important;
     }
     
-    /* Style the radio labels into modern clean buttons with visible white text */
-    .stRadio div[role="radiogroup"] label {
+    /* Style the radio option wrappers */
+    .stRadio div[role="radiogroup"] > label {
         background-color: #1e1e1e !important;
         border: 1px solid #2d2d2d !important;
         padding: 10px 20px !important;
         border-radius: 8px !important;
-        color: #ffffff !important;
-        font-weight: 600 !important;
-        margin-right: 10px;
         cursor: pointer;
         transition: all 0.2s ease-in-out;
+        margin-right: 10px;
     }
     
-    .stRadio div[role="radiogroup"] label:hover {
+    .stRadio div[role="radiogroup"] > label:hover {
         border-color: #22c55e !important;
         background-color: #252525 !important;
     }
 
-    /* Hide the inner container spans that create dots */
+    /* Target the text inside radio buttons to make it white and visible */
+    .stRadio div[role="radiogroup"] p, 
+    .stRadio div[role="radiogroup"] span,
     .stRadio div[role="radiogroup"] label div {
+        color: #ffffff !important;
+        display: inline-block !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Hide ONLY the radio bullet circle div, keeping the text */
+    .stRadio div[role="radiogroup"] label > div:first-child {
         display: none !important;
     }
     </style>
@@ -105,7 +112,7 @@ if "nav_index" not in st.session_state:
   st.session_state.nav_index = 0
 
 # --- HEADER WITH TITLE ON LEFT AND LOGO ON THE RIGHT SIDE ---
-logo_path = "image/LPDG_GROUP_LOGO_India_2.png"
+logo_path = "image/lpdg images.png"
 
 col_title, col_logo = st.columns([4, 1.5])
 
