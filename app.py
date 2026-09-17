@@ -10,32 +10,40 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# Custom CSS for Modern Tabs & Clean Dark/Accent Theme
+# Custom CSS for Black, Grey, Green and White Theme
 st.markdown(
     """
     <style>
     .stApp {
-        background-color: #0b1315;
+        background-color: #121212; /* Deep Black Background */
         color: #ffffff;
     }
     div.stMetric {
-        background-color: #111d22;
+        background-color: #1e1e1e; /* Dark Grey Metric Card */
         padding: 20px;
         border-radius: 12px;
-        border: 1px solid #1f3038;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        border: 1px solid #2d2d2d;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
-    /* Style for buttons */
+    /* Green Accent Buttons */
     .stButton>button {
-        background-color: #10b981;
-        color: white;
+        background-color: #22c55e; /* Vibrant Green */
+        color: #000000;
         border-radius: 8px;
         padding: 10px 24px;
-        font-weight: 600;
+        font-weight: 700;
         border: none;
     }
     .stButton>button:hover {
-        background-color: #059669;
+        background-color: #16a34a;
+        color: #ffffff;
+    }
+    /* Text Customizations */
+    h1, h2, h3 {
+        color: #ffffff !important;
+    }
+    p, span, label {
+        color: #d1d5db !important; /* Soft White/Grey text */
     }
     </style>
 """,
@@ -57,7 +65,8 @@ if "nav_index" not in st.session_state:
 
 # --- HEADER TITLE & SUBTITLE ---
 st.markdown(
-    "<h2 style='color: #10b981; margin-bottom: 0;'>NEXORA / 2026</h2>",
+    "<h2 style='color: #22c55e !important; margin-bottom: 0;'>NEXORA /"
+    " 2026</h2>",
     unsafe_allow_html=True,
 )
 st.markdown(
@@ -67,7 +76,7 @@ st.markdown(
 st.caption("Audit Console — Verified Telemetry View")
 st.markdown("---")
 
-# --- MODERN HORIZONTAL NAVIGATION (Using st.pills or st.radio with horizontal=True) ---
+# --- MODERN HORIZONTAL NAVIGATION ---
 selected_menu = st.radio(
     "Navigation Console",
     menu_options,
@@ -96,7 +105,7 @@ df_preds = pd.read_csv(pred_path)
 if selected_menu == "Executive Overview":
   st.markdown("### LPDG Gateway Predictive Maintenance")
   st.markdown(
-      "<p style='color: #94a3b8;'>Telemetry-Driven Intervention & Network Uptime"
+      "<p style='color: #9ca3af;'>Telemetry-Driven Intervention & Network Uptime"
       " Analysis</p>",
       unsafe_allow_html=True,
   )
@@ -129,7 +138,7 @@ if selected_menu == "Executive Overview":
   chart_data = pd.DataFrame(
       {"Strategy": ["3-sigma baseline", "Machine Learning"], "Cost": [329400, 270600]}
   )
-  st.bar_chart(chart_data.set_index("Strategy"), color="#10b981")
+  st.bar_chart(chart_data.set_index("Strategy"), color="#22c55e")
 
   # Next Section Button
   st.markdown("---")
