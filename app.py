@@ -62,17 +62,28 @@ menu_options = [
 if "nav_index" not in st.session_state:
   st.session_state.nav_index = 0
 
-# --- HEADER TITLE & SUBTITLE ---
-st.markdown(
-    "<h2 style='color: #22c55e !important; margin-bottom: 0;'>NEXORA /"
-    " 2026</h2>",
-    unsafe_allow_html=True,
-)
-st.markdown(
-    "<h1 style='margin-top: 0;'>Gateway Visit Prioritization</h1>",
-    unsafe_allow_html=True,
-)
-st.caption("Audit Console — Verified Telemetry View")
+# --- HEADER WITH 1ST IMAGE (LOGO) ---
+logo_path = "LPDG_GROUP_LOGO_India_2.png"
+
+col_logo, col_title = st.columns([1, 6])
+with col_logo:
+  if pathlib.Path(logo_path).exists():
+    st.image(logo_path, width=110)
+  else:
+    st.write("Logo missing")
+
+with col_title:
+  st.markdown(
+      "<h2 style='color: #22c55e !important; margin-bottom: 0;'>NEXORA /"
+      " 2026</h2>",
+      unsafe_allow_html=True,
+  )
+  st.markdown(
+      "<h1 style='margin-top: 0;'>Gateway Visit Prioritization</h1>",
+      unsafe_allow_html=True,
+  )
+  st.caption("Audit Console — Verified Telemetry View")
+
 st.markdown("---")
 
 # --- MODERN HORIZONTAL NAVIGATION ---
@@ -106,13 +117,6 @@ if selected_menu == "Executive Overview":
       "<p style='color: #9ca3af;'>Telemetry-Driven Intervention & Network Uptime"
       " Analysis</p>",
       unsafe_allow_html=True,
-  )
-
-  # Adding a relevant architectural / network banner image via URL or local file
-  st.image(
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
-      caption="Network Telemetry & Infrastructure Monitoring Dashboard",
-      use_container_width=True,
   )
 
   st.warning(
