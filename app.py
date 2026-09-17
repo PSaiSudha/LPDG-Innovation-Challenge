@@ -10,18 +10,27 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for Dark Theme Styling
+# Custom CSS for Sleek Modern Theme Styling
 st.markdown("""
     <style>
-    .main {
-        background-color: #0b1315;
-        color: #ffffff;
+    .stApp {
+        background-color: #f8fafc;
+        color: #1e293b;
     }
     div.stMetric {
-        background-color: #111d22;
-        padding: 15px;
-        border-radius: 8px;
-        border: 1px solid #1f3038;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    }
+    .custom-container {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        margin-bottom: 20px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -40,7 +49,7 @@ if 'nav_index' not in st.session_state:
     st.session_state.nav_index = 0
 
 # ----------------- SIDEBAR NAVIGATION -----------------
-st.sidebar.markdown("### **NEXORA / 2026**")
+st.sidebar.markdown("<h3 style='color: #1e3a8a;'>NEXORA / 2026</h3>", unsafe_allow_html=True)
 st.sidebar.markdown("## **Gateway Visit**")
 st.sidebar.markdown("##### Prioritization")
 st.sidebar.caption("Audit Console — Verified Telemetry View")
@@ -103,7 +112,7 @@ if selected_menu == "Executive Overview":
         'Strategy': ['3-sigma baseline', 'Machine Learning'],
         'Cost': [329400, 270600]
     })
-    st.bar_chart(chart_data.set_index('Strategy'), color="#1db954")
+    st.bar_chart(chart_data.set_index('Strategy'), color="#2563eb")
     
     # Next Section Button
     st.markdown("---")
@@ -126,11 +135,11 @@ elif selected_menu == "Part 2 — Machine Learning":
     st.markdown("# Part 2: Machine Learning Risk Ranking")
     st.markdown("Advanced feature-engineered scoring using telemetry trends (offline duration, reboots, disconnections).")
     
-    weeks = df_preds['week_start'].unique()
+    weeks = df_preds['week_start'].unique() if 'week_start' in df_preds.columns else [f"Week {i}" for i in range(1, 9)]
     dummy_trend = pd.DataFrame({
         '3-sigma baseline': [38000, 39500, 37000, 42000, 41000, 39000, 40000, 44000],
         'Machine Learning': [29000, 32000, 30500, 37000, 36500, 31000, 33000, 38000]
-    }, index=weeks)
+    }, index=weeks[:8])
     st.line_chart(dummy_trend)
     
     # Next Section Button
@@ -162,7 +171,7 @@ elif selected_menu == "Gateway Explorer":
     search_query = st.text_input("🔍 Enter Gateway ID (e.g., 02C0F45F31E7):")
     
     if search_query:
-        filtered_df = df_preds[df_preds['gateway_id'].str.contains(search_query, case=False, na=False)]
+        filtered_df = df_preds[df_preds['gateway_id'].str.contains(search_query, case=False, na=False)] if 'gateway_id' in df_preds.columns else pd.DataFrame()
         if not filtered_df.empty:
             st.success(f"Found {len(filtered_df)} record(s) matching your query:")
             st.dataframe(filtered_df, use_container_width=True)
