@@ -45,18 +45,16 @@ st.markdown(
         color: #d1d5db !important;
     }
     
-    /* Logo Box Styling */
+    /* Logo Box Styling (Removed Green Border, made it clean dark grey) */
     .logo-box {
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        background-color: #1e1e1e;
-        padding: 10px;
-        border-radius: 12px;
-        border: 1px solid #22c55e;
+        background-color: transparent;
+        padding: 5px;
     }
 
-    /* --- ROBUST CSS TO HIDE RADIO DOTS & MAKE PILL BUTTONS --- */
+    /* --- ROBUST CSS TO HIDE RADIO DOTS & SHOW TEXT CLEARLY --- */
     div[data-testid="stHorizontalBlock"] {
         align-items: center;
     }
@@ -66,22 +64,21 @@ st.markdown(
         display: none !important;
     }
     
-    /* Style the radio labels into modern clean buttons */
+    /* Style the radio labels into modern clean buttons with visible white text */
     .stRadio div[role="radiogroup"] label {
         background-color: #1e1e1e !important;
         border: 1px solid #2d2d2d !important;
-        padding: 8px 18px !important;
+        padding: 10px 20px !important;
         border-radius: 8px !important;
-        color: #d1d5db !important;
-        font-weight: 600;
-        margin-right: 8px;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        margin-right: 10px;
         cursor: pointer;
         transition: all 0.2s ease-in-out;
     }
     
     .stRadio div[role="radiogroup"] label:hover {
         border-color: #22c55e !important;
-        color: #ffffff !important;
         background-color: #252525 !important;
     }
 
@@ -94,7 +91,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- UPDATED MENU OPTIONS (Changed 'Baseline vs ML' to 'Strategy Comparison') ---
+# --- MENU OPTIONS ---
 menu_options = [
     "Overview",
     "Baseline (Part 1)",
@@ -108,7 +105,7 @@ if "nav_index" not in st.session_state:
   st.session_state.nav_index = 0
 
 # --- HEADER WITH TITLE ON LEFT AND LOGO ON THE RIGHT SIDE ---
-logo_path = "image/lpdg images.png"
+logo_path = "image/LPDG_GROUP_LOGO_India_2.png"
 
 col_title, col_logo = st.columns([4, 1.5])
 
