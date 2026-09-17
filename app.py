@@ -5,28 +5,38 @@ import streamlit as st
 # Page Configuration
 st.set_page_config(
     page_title="NEXORA | Gateway Visit Prioritization",
-    page_icon="➕",
+    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
-# Custom CSS for Modern Top Navigation & Clean Styling
+# Custom CSS for Modern Tabs & Clean Dark/Accent Theme
 st.markdown(
     """
     <style>
-    .main {
+    .stApp {
         background-color: #0b1315;
         color: #ffffff;
     }
     div.stMetric {
         background-color: #111d22;
-        padding: 15px;
-        border-radius: 8px;
+        padding: 20px;
+        border-radius: 12px;
         border: 1px solid #1f3038;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     }
-    /* Hide default streamlit menu/footer if needed */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
+    /* Style for buttons */
+    .stButton>button {
+        background-color: #10b981;
+        color: white;
+        border-radius: 8px;
+        padding: 10px 24px;
+        font-weight: 600;
+        border: none;
+    }
+    .stButton>button:hover {
+        background-color: #059669;
+    }
     </style>
 """,
     unsafe_allow_html=True,
@@ -45,19 +55,28 @@ menu_options = [
 if "nav_index" not in st.session_state:
   st.session_state.nav_index = 0
 
-# ----------------- TOP HORIZONTAL NAVIGATION (Tabs Template) -----------------
-st.markdown("### **NEXORA / 2026** — Gateway Visit Prioritization")
+# --- HEADER TITLE & SUBTITLE ---
+st.markdown(
+    "<h2 style='color: #10b981; margin-bottom: 0;'>NEXORA / 2026</h2>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<h1 style='margin-top: 0;'>Gateway Visit Prioritization</h1>",
+    unsafe_allow_html=True,
+)
 st.caption("Audit Console — Verified Telemetry View")
+st.markdown("---")
 
-# Using streamlit radio/selectbox horizontally or custom tabs for layout change
+# --- MODERN HORIZONTAL NAVIGATION (Using st.pills or st.radio with horizontal=True) ---
 selected_menu = st.radio(
-    "Navigation Menu",
+    "Navigation Console",
     menu_options,
     index=st.session_state.nav_index,
     horizontal=True,
+    label_visibility="collapsed",
 )
 
-# Update session state
+# Update session state index
 st.session_state.nav_index = menu_options.index(selected_menu)
 st.markdown("---")
 
@@ -75,8 +94,12 @@ df_preds = pd.read_csv(pred_path)
 # ----------------- PAGE CONTENT -----------------
 
 if selected_menu == "Executive Overview":
-  st.markdown("# LPDG Gateway Predictive Maintenance")
-  st.markdown("#### Telemetry-Driven Intervention & Network Uptime Analysis")
+  st.markdown("### LPDG Gateway Predictive Maintenance")
+  st.markdown(
+      "<p style='color: #94a3b8;'>Telemetry-Driven Intervention & Network Uptime"
+      " Analysis</p>",
+      unsafe_allow_html=True,
+  )
 
   st.warning(
       "**Telemetry Verification:** These results use a constructed historical"
@@ -106,7 +129,7 @@ if selected_menu == "Executive Overview":
   chart_data = pd.DataFrame(
       {"Strategy": ["3-sigma baseline", "Machine Learning"], "Cost": [329400, 270600]}
   )
-  st.bar_chart(chart_data.set_index("Strategy"), color="#1db954")
+  st.bar_chart(chart_data.set_index("Strategy"), color="#10b981")
 
   # Next Section Button
   st.markdown("---")
@@ -115,7 +138,7 @@ if selected_menu == "Executive Overview":
     st.rerun()
 
 elif selected_menu == "Part 1 — Operational Ranking":
-  st.markdown("# Part 1: Official 3-Sigma Baseline")
+  st.markdown("### Part 1: Official 3-Sigma Baseline")
   st.markdown(
       "This section shows the standard baseline operational ranking using"
       " rolling deviation limits."
@@ -129,7 +152,7 @@ elif selected_menu == "Part 1 — Operational Ranking":
     st.rerun()
 
 elif selected_menu == "Part 2 — Machine Learning":
-  st.markdown("# Part 2: Machine Learning Risk Ranking")
+  st.markdown("### Part 2: Machine Learning Risk Ranking")
   st.markdown(
       "Advanced feature-engineered scoring using telemetry trends (offline"
       " duration, reboots, disconnections)."
@@ -174,7 +197,7 @@ elif selected_menu == "Part 2 — Machine Learning":
     st.rerun()
 
 elif selected_menu == "Baseline vs ML":
-  st.markdown("# Baseline vs Machine Learning Comparison")
+  st.markdown("### Baseline vs Machine Learning Comparison")
   st.markdown(
       "Detailed breakdown of cost savings and anomaly detection efficiency"
       " between Part 1 and Part 2."
@@ -200,7 +223,7 @@ elif selected_menu == "Baseline vs ML":
     st.rerun()
 
 elif selected_menu == "Gateway Explorer":
-  st.markdown("# Gateway Explorer & Search")
+  st.markdown("### Gateway Explorer & Search")
   st.markdown("Search for specific gateway IDs across predicted weeks.")
 
   search_query = st.text_input("🔍 Enter Gateway ID (e.g., 02C0F45F31E7):")
