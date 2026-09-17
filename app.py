@@ -38,12 +38,11 @@ st.markdown(
         background-color: #16a34a;
         color: #ffffff;
     }
-    /* Text Customizations */
     h1, h2, h3 {
         color: #ffffff !important;
     }
     p, span, label {
-        color: #d1d5db !important; /* Soft White/Grey text */
+        color: #d1d5db !important;
     }
     </style>
 """,
@@ -85,7 +84,6 @@ selected_menu = st.radio(
     label_visibility="collapsed",
 )
 
-# Update session state index
 st.session_state.nav_index = menu_options.index(selected_menu)
 st.markdown("---")
 
@@ -108,6 +106,13 @@ if selected_menu == "Executive Overview":
       "<p style='color: #9ca3af;'>Telemetry-Driven Intervention & Network Uptime"
       " Analysis</p>",
       unsafe_allow_html=True,
+  )
+
+  # Adding a relevant architectural / network banner image via URL or local file
+  st.image(
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+      caption="Network Telemetry & Infrastructure Monitoring Dashboard",
+      use_container_width=True,
   )
 
   st.warning(
@@ -140,7 +145,6 @@ if selected_menu == "Executive Overview":
   )
   st.bar_chart(chart_data.set_index("Strategy"), color="#22c55e")
 
-  # Next Section Button
   st.markdown("---")
   if st.button("Next: Part 1 — Operational Ranking ➡️"):
     st.session_state.nav_index = 1
@@ -154,7 +158,6 @@ elif selected_menu == "Part 1 — Operational Ranking":
   )
   st.dataframe(df_preds, use_container_width=True)
 
-  # Next Section Button
   st.markdown("---")
   if st.button("Next: Part 2 — Machine Learning ➡️"):
     st.session_state.nav_index = 2
@@ -199,7 +202,6 @@ elif selected_menu == "Part 2 — Machine Learning":
   )
   st.line_chart(dummy_trend)
 
-  # Next Section Button
   st.markdown("---")
   if st.button("Next: Baseline vs ML ➡️"):
     st.session_state.nav_index = 3
@@ -225,7 +227,6 @@ elif selected_menu == "Baseline vs ML":
         " rule)."
     )
 
-  # Next Section Button
   st.markdown("---")
   if st.button("Next: Gateway Explorer ➡️"):
     st.session_state.nav_index = 4
