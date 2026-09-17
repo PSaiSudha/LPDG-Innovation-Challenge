@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# Custom CSS for Black, Grey, Green, White Theme & Clickable Pill Navigation
+# Custom CSS for Black, Grey, Green, White Theme & Pill Navigation
 st.markdown(
     """
     <style>
@@ -56,26 +56,37 @@ st.markdown(
         border: 1px solid #22c55e;
     }
 
-    /* --- TRANSFORM RADIO BUTTONS INTO MODERN CLICKABLE TABS/PILLS --- */
-    div.stRadio > div[role="radiogroup"] {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
+    /* --- ROBUST CSS TO HIDE RADIO DOTS & MAKE PILL BUTTONS --- */
+    div[data-testid="stHorizontalBlock"] {
+        align-items: center;
     }
-    div.stRadio > div[role="radiogroup"] > label {
+    
+    /* Hide radio button circles completely */
+    .stRadio div[role="radiogroup"] input[type="radio"] {
+        display: none !important;
+    }
+    
+    /* Style the radio labels into modern clean buttons */
+    .stRadio div[role="radiogroup"] label {
         background-color: #1e1e1e !important;
         border: 1px solid #2d2d2d !important;
-        padding: 10px 20px !important;
+        padding: 8px 18px !important;
         border-radius: 8px !important;
+        color: #d1d5db !important;
+        font-weight: 600;
+        margin-right: 8px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease-in-out;
     }
-    div.stRadio > div[role="radiogroup"] > label:hover {
+    
+    .stRadio div[role="radiogroup"] label:hover {
         border-color: #22c55e !important;
+        color: #ffffff !important;
         background-color: #252525 !important;
     }
-    /* Hide the default radio circle dots */
-    div.stRadio > div[role="radiogroup"] > label > div:first-child {
+
+    /* Hide the inner container spans that create dots */
+    .stRadio div[role="radiogroup"] label div {
         display: none !important;
     }
     </style>
@@ -83,12 +94,12 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- UPDATED BUTTON & MENU NAMES ---
+# --- UPDATED MENU OPTIONS (Changed 'Baseline vs ML' to 'Strategy Comparison') ---
 menu_options = [
     "Overview",
     "Baseline (Part 1)",
     "ML Model (Part 2)",
-    "Baseline vs ML",
+    "Strategy Comparison",
     "Search & Explore",
 ]
 
@@ -96,8 +107,8 @@ menu_options = [
 if "nav_index" not in st.session_state:
   st.session_state.nav_index = 0
 
-# --- HEADER WITH TITLE ON LEFT AND LARGER LOGO ON THE RIGHT SIDE ---
-logo_path = "image/LPDG_GROUP_LOGO_India_2.png"
+# --- HEADER WITH TITLE ON LEFT AND LOGO ON THE RIGHT SIDE ---
+logo_path = "image/lpdg images.png"
 
 col_title, col_logo = st.columns([4, 1.5])
 
@@ -125,7 +136,7 @@ with col_logo:
       st.image(alt_path, width=180)
       st.markdown("</div>", unsafe_allow_html=True)
     else:
-      st.write("")
+      st.warning("⚠️ Logo not found in 'image/' folder!")
 
 st.markdown("---")
 
@@ -250,12 +261,12 @@ elif selected_menu == "ML Model (Part 2)":
   st.line_chart(dummy_trend)
 
   st.markdown("---")
-  if st.button("Next: Baseline vs ML ➡️"):
+  if st.button("Next: Strategy Comparison ➡️"):
     st.session_state.nav_index = 3
     st.rerun()
 
-elif selected_menu == "Baseline vs ML":
-  st.markdown("### Baseline vs Machine Learning Comparison")
+elif selected_menu == "Strategy Comparison":
+  st.markdown("### Strategy Comparison (Baseline vs Machine Learning)")
   st.markdown(
       "Detailed breakdown of cost savings and anomaly detection efficiency"
       " between Part 1 and Part 2."
@@ -274,7 +285,6 @@ elif selected_menu == "Baseline vs ML":
         " rule)."
     )
 
-  # Added Extra Analytical View for Comparison
   st.markdown("---")
   st.markdown("### Financial Impact Summary")
   comparison_table = pd.DataFrame(
