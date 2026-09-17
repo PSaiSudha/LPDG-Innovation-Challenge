@@ -62,15 +62,10 @@ menu_options = [
 if "nav_index" not in st.session_state:
   st.session_state.nav_index = 0
 
-# --- HEADER WITH 1ST IMAGE (LOGO) ---
+# --- HEADER WITH LOGO ON THE RIGHT SIDE ---
 logo_path = "LPDG_GROUP_LOGO_India_2.png"
 
-col_logo, col_title = st.columns([1, 6])
-with col_logo:
-  if pathlib.Path(logo_path).exists():
-    st.image(logo_path, width=110)
-  else:
-    st.write("Logo missing")
+col_title, col_logo = st.columns([5, 1])
 
 with col_title:
   st.markdown(
@@ -83,6 +78,12 @@ with col_title:
       unsafe_allow_html=True,
   )
   st.caption("Audit Console — Verified Telemetry View")
+
+with col_logo:
+  if pathlib.Path(logo_path).exists():
+    st.image(logo_path, width=100)
+  else:
+    st.write("")
 
 st.markdown("---")
 
