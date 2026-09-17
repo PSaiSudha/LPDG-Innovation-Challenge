@@ -62,7 +62,7 @@ menu_options = [
 if "nav_index" not in st.session_state:
   st.session_state.nav_index = 0
 
-# --- HEADER WITH LOGO ON THE RIGHT SIDE ---
+# --- HEADER WITH TITLE ON LEFT AND LOGO ON THE RIGHT SIDE ---
 logo_path = "LPDG_GROUP_LOGO_India_2.png"
 
 col_title, col_logo = st.columns([5, 1])
@@ -81,9 +81,9 @@ with col_title:
 
 with col_logo:
   if pathlib.Path(logo_path).exists():
-    st.image(logo_path, width=100)
+    st.image(logo_path, width=110)
   else:
-    st.write("")
+    st.warning("Logo not found")
 
 st.markdown("---")
 
