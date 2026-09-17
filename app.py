@@ -83,7 +83,7 @@ with col_logo:
   if pathlib.Path(logo_path).exists():
     st.image(logo_path, width=110)
   else:
-    st.warning("Logo not found")
+    st.write("") 
 
 st.markdown("---")
 
