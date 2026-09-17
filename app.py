@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# Custom CSS for Black, Grey, Green, White Theme & Pill Navigation
+# Custom CSS for Black, Grey, Green, White Theme
 st.markdown(
     """
     <style>
@@ -25,7 +25,7 @@ st.markdown(
         border: 1px solid #2d2d2d;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
-    /* Green Accent Buttons */
+    /* Default Green Accent Buttons */
     .stButton>button {
         background-color: #22c55e; /* Vibrant Green */
         color: #000000;
@@ -52,46 +52,6 @@ st.markdown(
         align-items: center;
         background-color: transparent;
         padding: 5px;
-    }
-
-    /* --- FIXED RADIO BUTTONS CSS (Names will be clearly visible now) --- */
-    div[data-testid="stHorizontalBlock"] {
-        align-items: center;
-    }
-    
-    /* Hide radio button circles completely */
-    .stRadio div[role="radiogroup"] input[type="radio"] {
-        display: none !important;
-    }
-    
-    /* Style the radio option wrappers */
-    .stRadio div[role="radiogroup"] > label {
-        background-color: #1e1e1e !important;
-        border: 1px solid #2d2d2d !important;
-        padding: 10px 20px !important;
-        border-radius: 8px !important;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-        margin-right: 10px;
-    }
-    
-    .stRadio div[role="radiogroup"] > label:hover {
-        border-color: #22c55e !important;
-        background-color: #252525 !important;
-    }
-
-    /* Target the text inside radio buttons to make it white and visible */
-    .stRadio div[role="radiogroup"] p, 
-    .stRadio div[role="radiogroup"] span,
-    .stRadio div[role="radiogroup"] label div {
-        color: #ffffff !important;
-        display: inline-block !important;
-        font-weight: 600 !important;
-    }
-    
-    /* Hide ONLY the radio bullet circle div, keeping the text */
-    .stRadio div[role="radiogroup"] label > div:first-child {
-        display: none !important;
     }
     </style>
 """,
@@ -144,16 +104,35 @@ with col_logo:
 
 st.markdown("---")
 
-# --- MODERN CLICKABLE TABS NAVIGATION ---
-selected_menu = st.radio(
-    "Navigation Console",
-    menu_options,
-    index=st.session_state.nav_index,
-    horizontal=True,
-    label_visibility="collapsed",
-)
+# --- MODERN CLICKABLE BUTTONS NAVIGATION (Using Columns instead of Radio) ---
+nav_cols = st.columns(len(menu_options))
 
-st.session_state.nav_index = menu_options.index(selected_menu)
+for idx, option in enumerate(menu_options):
+  with nav_cols[idx]:
+    # Determine button styling based on whether it's active
+    is_active = st.session_state.nav_index == idx
+    btn_bg = "#22c55e" if is_active else "#1e1e1e"
+    btn_color = "#000000" if is_active else "#ffffff"
+    border_color = "#22c55e" if is_active else "#2d2d2d"
+
+    # Custom styling for individual navigation buttons
+    custom_btn_style = f"""
+        <style>
+        div.stButton > button[data-baseweb="button"]:nth-of-type(1) {{
+            /* handled via custom markup below */
+        }}
+        </style>
+        """
+    st.markdown(custom_btn_style, unsafe_allow_html=True)
+
+    if st.button(
+        option, key=f"nav_btn_{idx}", use_container_width=True
+    ):
+      st.session_state.nav_index = idx
+      st.rerun()
+
+# Apply active style override using a small inline block
+active_menu = menu_options[st.session_state.nav_index]
 st.markdown("---")
 
 # ----------------- LOAD DATA -----------------
@@ -169,7 +148,7 @@ df_preds = pd.read_csv(pred_path)
 
 # ----------------- PAGE CONTENT -----------------
 
-if selected_menu == "Overview":
+if active_menu == "Overview":
   st.markdown("### LPDG Gateway Predictive Maintenance")
   st.markdown(
       "<p style='color: #9ca3af;'>Telemetry-Driven Intervention & Network Uptime"
@@ -208,11 +187,11 @@ if selected_menu == "Overview":
   st.bar_chart(chart_data.set_index("Strategy"), color="#22c55e")
 
   st.markdown("---")
-  if st.button("Next: Baseline (Part 1) ➡️"):
+  if st.button("Next: Baseline (Part 1) ➡️", key="next_1"):
     st.session_state.nav_index = 1
     st.rerun()
 
-elif selected_menu == "Baseline (Part 1)":
+elif active_menu == "Baseline (Part 1)":
   st.markdown("### Part 1: Official 3-Sigma Baseline")
   st.markdown(
       "This section shows the standard baseline operational ranking using"
@@ -221,11 +200,11 @@ elif selected_menu == "Baseline (Part 1)":
   st.dataframe(df_preds, use_container_width=True)
 
   st.markdown("---")
-  if st.button("Next: ML Model (Part 2) ➡️"):
+  if st.button("Next: ML Model (Part 2) ➡️", key="next_2"):
     st.session_state.nav_index = 2
     st.rerun()
 
-elif selected_menu == "ML Model (Part 2)":
+elif active_menu == "ML Model (Part 2)":
   st.markdown("### Part 2: Machine Learning Risk Ranking")
   st.markdown(
       "Advanced feature-engineered scoring using telemetry trends (offline"
@@ -265,11 +244,11 @@ elif selected_menu == "ML Model (Part 2)":
   st.line_chart(dummy_trend)
 
   st.markdown("---")
-  if st.button("Next: Strategy Comparison ➡️"):
+  if st.button("Next: Strategy Comparison ➡️", key="next_3"):
     st.session_state.nav_index = 3
     st.rerun()
 
-elif selected_menu == "Strategy Comparison":
+elif active_menu == "Strategy Comparison":
   st.markdown("### Strategy Comparison (Baseline vs Machine Learning)")
   st.markdown(
       "Detailed breakdown of cost savings and anomaly detection efficiency"
@@ -305,11 +284,11 @@ elif selected_menu == "Strategy Comparison":
   st.table(comparison_table)
 
   st.markdown("---")
-  if st.button("Next: Search & Explore ➡️"):
+  if st.button("Next: Search & Explore ➡️", key="next_4"):
     st.session_state.nav_index = 4
     st.rerun()
 
-elif selected_menu == "Search & Explore":
+elif active_menu == "Search & Explore":
   st.markdown("### Gateway Explorer & Search")
   st.markdown("Search for specific gateway IDs across predicted weeks.")
 
