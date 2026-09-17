@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# Custom CSS for Black, Grey, Green and White Theme
+# Custom CSS for Black, Grey, Green, White Theme & Clickable Pill Navigation
 st.markdown(
     """
     <style>
@@ -44,26 +44,60 @@ st.markdown(
     p, span, label {
         color: #d1d5db !important;
     }
+    
+    /* Logo Box Styling */
+    .logo-box {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        background-color: #1e1e1e;
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid #22c55e;
+    }
+
+    /* --- TRANSFORM RADIO BUTTONS INTO MODERN CLICKABLE TABS/PILLS --- */
+    div.stRadio > div[role="radiogroup"] {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    div.stRadio > div[role="radiogroup"] > label {
+        background-color: #1e1e1e !important;
+        border: 1px solid #2d2d2d !important;
+        padding: 10px 20px !important;
+        border-radius: 8px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    div.stRadio > div[role="radiogroup"] > label:hover {
+        border-color: #22c55e !important;
+        background-color: #252525 !important;
+    }
+    /* Hide the default radio circle dots */
+    div.stRadio > div[role="radiogroup"] > label > div:first-child {
+        display: none !important;
+    }
     </style>
 """,
     unsafe_allow_html=True,
 )
 
-# Define Menu Options
+# --- UPDATED BUTTON & MENU NAMES ---
 menu_options = [
-    "Executive Overview",
-    "Part 1 — Operational Ranking",
-    "Part 2 — Machine Learning",
+    "Overview",
+    "Baseline (Part 1)",
+    "ML Model (Part 2)",
     "Baseline vs ML",
-    "Gateway Explorer",
+    "Search & Explore",
 ]
 
 # Initialize Session State Index
 if "nav_index" not in st.session_state:
   st.session_state.nav_index = 0
 
-# --- HEADER WITH TITLE ON LEFT AND LOGO ON THE RIGHT SIDE ---
-logo_path = "image/lpdg images.png"
+# --- HEADER WITH TITLE ON LEFT AND LARGER LOGO ON THE RIGHT SIDE ---
+logo_path = "image/LPDG_GROUP_LOGO_India_2.png"
 
 col_title, col_logo = st.columns([4, 1.5])
 
@@ -81,15 +115,21 @@ with col_title:
 
 with col_logo:
   if pathlib.Path(logo_path).exists():
-    st.markdown('<div class="logo-container">', unsafe_allow_html=True)
-    st.image(logo_path, width=155)
+    st.markdown('<div class="logo-box">', unsafe_allow_html=True)
+    st.image(logo_path, width=180)
     st.markdown("</div>", unsafe_allow_html=True)
   else:
-    st.warning("Logo not found in image/ folder") 
+    alt_path = "images/LPDG_GROUP_LOGO_India_2.png"
+    if pathlib.Path(alt_path).exists():
+      st.markdown('<div class="logo-box">', unsafe_allow_html=True)
+      st.image(alt_path, width=180)
+      st.markdown("</div>", unsafe_allow_html=True)
+    else:
+      st.write("")
 
 st.markdown("---")
 
-# --- MODERN HORIZONTAL NAVIGATION ---
+# --- MODERN CLICKABLE TABS NAVIGATION ---
 selected_menu = st.radio(
     "Navigation Console",
     menu_options,
@@ -114,7 +154,7 @@ df_preds = pd.read_csv(pred_path)
 
 # ----------------- PAGE CONTENT -----------------
 
-if selected_menu == "Executive Overview":
+if selected_menu == "Overview":
   st.markdown("### LPDG Gateway Predictive Maintenance")
   st.markdown(
       "<p style='color: #9ca3af;'>Telemetry-Driven Intervention & Network Uptime"
@@ -153,11 +193,11 @@ if selected_menu == "Executive Overview":
   st.bar_chart(chart_data.set_index("Strategy"), color="#22c55e")
 
   st.markdown("---")
-  if st.button("Next: Part 1 — Operational Ranking ➡️"):
+  if st.button("Next: Baseline (Part 1) ➡️"):
     st.session_state.nav_index = 1
     st.rerun()
 
-elif selected_menu == "Part 1 — Operational Ranking":
+elif selected_menu == "Baseline (Part 1)":
   st.markdown("### Part 1: Official 3-Sigma Baseline")
   st.markdown(
       "This section shows the standard baseline operational ranking using"
@@ -166,11 +206,11 @@ elif selected_menu == "Part 1 — Operational Ranking":
   st.dataframe(df_preds, use_container_width=True)
 
   st.markdown("---")
-  if st.button("Next: Part 2 — Machine Learning ➡️"):
+  if st.button("Next: ML Model (Part 2) ➡️"):
     st.session_state.nav_index = 2
     st.rerun()
 
-elif selected_menu == "Part 2 — Machine Learning":
+elif selected_menu == "ML Model (Part 2)":
   st.markdown("### Part 2: Machine Learning Risk Ranking")
   st.markdown(
       "Advanced feature-engineered scoring using telemetry trends (offline"
@@ -234,12 +274,28 @@ elif selected_menu == "Baseline vs ML":
         " rule)."
     )
 
+  # Added Extra Analytical View for Comparison
   st.markdown("---")
-  if st.button("Next: Gateway Explorer ➡️"):
+  st.markdown("### Financial Impact Summary")
+  comparison_table = pd.DataFrame(
+      {
+          "Metric Strategy": [
+              "Total Intervention Cost",
+              "False Positive Overhead",
+              "Net Savings",
+          ],
+          "3-Sigma Baseline (Part 1)": ["€329,400", "High", "€0 (Baseline)"],
+          "Machine Learning (Part 2)": ["€270,600", "Optimized", "€58,800"],
+      }
+  )
+  st.table(comparison_table)
+
+  st.markdown("---")
+  if st.button("Next: Search & Explore ➡️"):
     st.session_state.nav_index = 4
     st.rerun()
 
-elif selected_menu == "Gateway Explorer":
+elif selected_menu == "Search & Explore":
   st.markdown("### Gateway Explorer & Search")
   st.markdown("Search for specific gateway IDs across predicted weeks.")
 
