@@ -5,51 +5,28 @@ import streamlit as st
 # Page Configuration
 st.set_page_config(
     page_title="NEXORA | Gateway Visit Prioritization",
-    page_icon="⚡",
+    page_icon="➕",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
-# --- MODERN UI CUSTOM STYLING (Complete Template Change) ---
+# Custom CSS for Modern Top Navigation & Clean Styling
 st.markdown(
     """
     <style>
-    .stApp {
-        background-color: #f1f5f9;
-        color: #0f172a;
+    .main {
+        background-color: #0b1315;
+        color: #ffffff;
     }
-    /* Custom Header Container */
-    .top-header {
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        padding: 25px 30px;
-        border-radius: 12px;
-        color: white;
-        margin-bottom: 25px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    div.stMetric {
+        background-color: #111d22;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #1f3038;
     }
-    /* Modern Cards for Metrics & Content */
-    .metric-card {
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 12px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-        margin-bottom: 15px;
-        text-align: center;
-    }
-    .content-box {
-        background-color: #ffffff;
-        padding: 25px;
-        border-radius: 12px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-        margin-bottom: 20px;
-    }
-    /* Sidebar Customization */
-    section[data-testid="stSidebar"] {
-        background-color: #ffffff;
-        border-right: 1px solid #e2e8f0;
-    }
+    /* Hide default streamlit menu/footer if needed */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
     </style>
 """,
     unsafe_allow_html=True,
@@ -68,30 +45,21 @@ menu_options = [
 if "nav_index" not in st.session_state:
   st.session_state.nav_index = 0
 
-# ----------------- SIDEBAR NAVIGATION -----------------
-st.sidebar.markdown(
-    "<h3 style='color: #0f172a; margin-bottom:0;'>NEXORA / 2026</h3>",
-    unsafe_allow_html=True,
-)
-st.sidebar.markdown(
-    "<p style='color: #64748b; font-size:13px;'>Gateway Visit Prioritization</p>",
-    unsafe_allow_html=True,
-)
-st.sidebar.caption("Audit Console — Verified Telemetry View")
+# ----------------- TOP HORIZONTAL NAVIGATION (Tabs Template) -----------------
+st.markdown("### **NEXORA / 2026** — Gateway Visit Prioritization")
+st.caption("Audit Console — Verified Telemetry View")
 
-st.sidebar.success("✅ Part 1 validated")
-st.sidebar.markdown("---")
-
-# Use index based radio selection to prevent widget collision errors
-selected_menu = st.sidebar.radio(
-    "Navigation", menu_options, index=st.session_state.nav_index
+# Using streamlit radio/selectbox horizontally or custom tabs for layout change
+selected_menu = st.radio(
+    "Navigation Menu",
+    menu_options,
+    index=st.session_state.nav_index,
+    horizontal=True,
 )
 
-# Update session state if user clicks sidebar manually
+# Update session state
 st.session_state.nav_index = menu_options.index(selected_menu)
-
-st.sidebar.markdown("---")
-st.sidebar.caption("Proxy-Label Baseline Assessment")
+st.markdown("---")
 
 # ----------------- LOAD DATA -----------------
 pred_path = pathlib.Path("predictions.csv")
@@ -107,15 +75,8 @@ df_preds = pd.read_csv(pred_path)
 # ----------------- PAGE CONTENT -----------------
 
 if selected_menu == "Executive Overview":
-  st.markdown(
-      """
-        <div class="top-header">
-            <h1 style="margin:0; font-size: 26px; color: white;">LPDG Gateway Predictive Maintenance</h1>
-            <p style="margin:5px 0 0 0; font-size: 14px; color: #94a3b8;">Telemetry-Driven Intervention & Network Uptime Analysis</p>
-        </div>
-    """,
-      unsafe_allow_html=True,
-  )
+  st.markdown("# LPDG Gateway Predictive Maintenance")
+  st.markdown("#### Telemetry-Driven Intervention & Network Uptime Analysis")
 
   st.warning(
       "**Telemetry Verification:** These results use a constructed historical"
@@ -125,75 +86,27 @@ if selected_menu == "Executive Overview":
 
   col1, col2, col3 = st.columns(3)
   with col1:
-    st.markdown(
-        """
-            <div class="metric-card">
-                <span style="color: #64748b; font-size: 13px;">Baseline cost (Part 1)</span>
-                <h3 style="color: #0f172a; margin: 5px 0 0 0;">€329,400</h3>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.metric(label="Baseline cost (Part 1)", value="€329,400")
   with col2:
-    st.markdown(
-        """
-            <div class="metric-card">
-                <span style="color: #64748b; font-size: 13px;">Machine Learning cost (Part 2)</span>
-                <h3 style="color: #0f172a; margin: 5px 0 0 0;">€270,600</h3>
-                <span style="color: #10b981; font-size: 12px; font-weight: 600;">🟢 €58,800 saved</span>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.metric(label="Machine Learning cost (Part 2)", value="€270,600")
+    st.caption("🟢 €58,800 saved")
   with col3:
-    st.markdown(
-        """
-            <div class="metric-card">
-                <span style="color: #64748b; font-size: 13px;">Lower historical proxy-label cost</span>
-                <h3 style="color: #0f172a; margin: 5px 0 0 0;">€58,800</h3>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.metric(label="Lower historical proxy-label cost", value="€58,800")
 
   col4, col5, col6 = st.columns(3)
   with col4:
-    st.markdown(
-        """
-            <div class="metric-card">
-                <span style="color: #64748b; font-size: 13px;">Unseen gateways evaluated</span>
-                <h3 style="color: #0f172a; margin: 5px 0 0 0;">35</h3>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.metric(label="Unseen gateways evaluated", value="35")
   with col5:
-    st.markdown(
-        """
-            <div class="metric-card">
-                <span style="color: #64748b; font-size: 13px;">Forward-test weeks</span>
-                <h3 style="color: #0f172a; margin: 5px 0 0 0;">8</h3>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.metric(label="Forward-test weeks", value="8")
   with col6:
-    st.markdown(
-        """
-            <div class="metric-card">
-                <span style="color: #64748b; font-size: 13px;">Gateways ranked per week</span>
-                <h3 style="color: #0f172a; margin: 5px 0 0 0;">15</h3>
-            </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.metric(label="Gateways ranked per week", value="15")
 
   st.markdown("---")
   st.markdown("### Forward evaluation at a glance")
   chart_data = pd.DataFrame(
       {"Strategy": ["3-sigma baseline", "Machine Learning"], "Cost": [329400, 270600]}
   )
-  st.bar_chart(chart_data.set_index("Strategy"), color="#2563eb")
+  st.bar_chart(chart_data.set_index("Strategy"), color="#1db954")
 
   # Next Section Button
   st.markdown("---")
@@ -250,7 +163,7 @@ elif selected_menu == "Part 2 — Machine Learning":
               38000,
           ],
       },
-      index=weeks[:8],
+      index=weeks[:8] if len(weeks) >= 8 else weeks,
   )
   st.line_chart(dummy_trend)
 
